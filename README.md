@@ -1,2 +1,2 @@
 # EEGInceptionZoned
-Open implementation and code from the publication "EEGInceptionZoned"
+Site prepared for the open implementation and code from the publication "EEGInceptionZoned".
