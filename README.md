@@ -3,7 +3,7 @@ Open implementation and code from the publication "EEGSym: Overcoming
 Intersubject Variability in Motor Imagery Based BCIs With Deep Learning".
 
 ## Architecture details
-![EEGSym architecture details](https://github.com/Serpeve/EEGSym/blob/main/EEGSym_scheme_online.jpg?raw=true)
+![EEGSym architecture details](https://github.com/Serpeve/EEGSym/blob/main/EEGSym_scheme_online.png?raw=true)
 
 ## Example of use:
 ```
