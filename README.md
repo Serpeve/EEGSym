@@ -2,6 +2,9 @@
 Open implementation and code from the publication "EEGSym: Overcoming 
 Intersubject Variability in Motor Imagery Based BCIs With Deep Learning".
 
+## Architecture details
+![EEGSym architecture details](/EEGSym/EEGSym_scheme_online.jpg?raw=true)
+
 ## Example of use:
 ```
 from EEGSym_architecture import EEGSym
