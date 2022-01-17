@@ -14,7 +14,6 @@ def preprocessing_function(augmentation=True):
         data_augmentation : function
             Data augmentation performed to each trial
     """
-
     def data_augmentation(trial):
         """Custom Data Augmentation for EEGSym.
 
@@ -133,8 +132,7 @@ def preprocessing_function(augmentation=True):
                                                          trial[:, channel].shape)
 
         return trial
-
-	return data_augmentation
+    return data_augmentation
 
 def trial_iterator(X, y, batch_size=32, shuffle=True, augmentation=True):
     """Custom trial iterator to pretrain EEGSym.
