@@ -11,16 +11,25 @@ from EEGSym_architecture import EEGSym
 from EEGSym_DataAugmentation import trial_iterator
 from tensorflow.keras.callbacks import EarlyStopping as kerasEarlyStopping
 
-# Batch size used for training
-bs_EEGSym = 32
+# Batch size used for fine-tuning
+bs_EEGSym = 32  # bs_EEGSym = 256 for pre-training (To reduce compute time)
 
 # Load the X EEG features and Y labels of your choiche in the followin format:
 # X = Features in the form of [examples, samples, ncha, 1]
 # Y = one_hot encoded labels, i.e., [examples, 1, 1]
 
-# Divide the features into training, validation and test to obtain X_train, 
-# Y_train, X_validate, Y_valicate, X_test, Y_test
+# Divide the features into training, validation and test to obtain:
+# X_train, Y_train, X_validate, Y_validate, X_test, Y_test
 
+# Select if the pre-trained weight values on 5 datasets that include 280  
+# users are loaded from these electrode configurations:
+# 8 Electrode configuration: ['F3', 'C3', 'P3', 'Cz', 'Pz', 'F4', 'C4', 'P4']
+# 16 Electrode configuration: ['F7', 'F3', 'T7', 'C3', 'P7', 'P3', 'O1', 'Cz', 
+#             'Pz', 'F8', 'F4', 'T8', 'C4', 'P8', 'P4', 'O2']
+pretrained = True  # Parameter to load pre-trained weight values
+
+# Select the number of channels of your application
+ncha = 8
 
 # Initialize the model
 hyperparameters = dict()
@@ -28,12 +37,14 @@ hyperparameters["ncha"] = channels
 hyperparameters["dropout_rate"] = 0.4
 hyperparameters["activation"] = 'elu'
 hyperparameters["n_classes"] = 2
-hyperparameters["learning_rate"] = 0.001  #0.001 for pretraining
+hyperparameters["learning_rate"] = 0.0001  # 1e-3 for pretraining and 1e-4 
+# for fine-tuning
 hyperparameters["fs"] = 128
 hyperparameters["input_time"] = 3000
 hyperparameters["scales_time"] = np.tile([125, 250, 500], 1)
 hyperparameters['filters_per_branch'] = 24
-hyperparameters['ch_lateral'] = 3  # 3/7 For 8/16 electrodes respectively
+hyperparameters['ch_lateral'] = (ncha - 2) / 7  # 3/7 For 8/16 electrodes 
+# respectively. For the configurations present in the publication.
 model_hyparams['residual'] = True
 model_hyparams['symmetric'] = True
 
@@ -42,6 +53,10 @@ model.summary()
 
 # Select if the data augmentation is performed
 augmentation = True  # Parameter to activate or deactivate DA
+
+# Load pre-trained weight values
+if pretrained:
+    model.load_weights('EEGSym_pretrained_weights_{}_electrode.h5'.format(ncha))
 
 # Early stopping
 early_stopping = [(kerasEarlyStopping(mode='auto', monitor='val_loss', 
