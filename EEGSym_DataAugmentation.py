@@ -1,6 +1,7 @@
 import tensorflow as tf
 import numpy as np
 
+
 def preprocessing_function(augmentation=True):
     """Custom Data Augmentation for EEGSym.
 
@@ -14,6 +15,7 @@ def preprocessing_function(augmentation=True):
         data_augmentation : function
             Data augmentation performed to each trial
     """
+
     def data_augmentation(trial):
         """Custom Data Augmentation for EEGSym.
 
@@ -37,7 +39,7 @@ def preprocessing_function(augmentation=True):
         augmentations["no_augmentation"] = 0
 
         selectionables = ["patch_perturbation", "random_shift",
-						  "hemisphere_perturbation", "no_augmentation"]
+                          "hemisphere_perturbation", "no_augmentation"]
         probabilities = None
 
         if augmentation:
@@ -51,9 +53,11 @@ def preprocessing_function(augmentation=True):
                 # Select position where to erase that timeframe
                 position = 0
                 if position == 0:
-                    samples_shifted = np.random.randint(low=1, high=int(samples * 0.5 / 3))
+                    samples_shifted = np.random.randint(low=1, high=int(
+                        samples * 0.5 / 3))
                 else:
-                    samples_shifted = np.random.randint(low=1, high=int(samples * 0.1 / 3))
+                    samples_shifted = np.random.randint(low=1, high=int(
+                        samples * 0.1 / 3))
 
                 if method == 0:
                     shifted_samples = np.zeros((samples_shifted, ncha, 1))
@@ -64,7 +68,8 @@ def preprocessing_function(augmentation=True):
                         std_applied = std
                     center = 0
                     shifted_samples = np.random.normal(center, std_applied,
-                                                       (samples_shifted, ncha, 1))
+                                                       (samples_shifted, ncha,
+                                                        1))
                 if position == 0:
                     trial = np.concatenate((shifted_samples, trial),
                                            axis=0)[:samples]
@@ -72,7 +77,8 @@ def preprocessing_function(augmentation=True):
                     trial = np.concatenate((trial, shifted_samples),
                                            axis=0)[samples_shifted:]
 
-            for _ in range(augmentations["patch_perturbation"]):  # Patch erasing
+            for _ in range(
+                    augmentations["patch_perturbation"]):  # Patch perturbation
                 channels_affected = np.random.randint(low=1, high=ncha - 1)
                 pct_max = 1
                 pct_min = 0.2
@@ -86,8 +92,9 @@ def preprocessing_function(augmentation=True):
                         samples - samples_erased)
                 else:
                     samples_idx = np.arange(samples_erased)
-                # Select indexes to erase (always keep half the channels at least)
-                channel_idx = np.random.permutation(np.arange(ncha))[:channels_affected]
+                # Select indexes to erase (always keep at least a channel)
+                channel_idx = np.random.permutation(np.arange(ncha))[
+                              :channels_affected]
                 channel_idx.sort()
                 for channel in channel_idx:
                     if method == 0:
@@ -101,7 +108,8 @@ def preprocessing_function(augmentation=True):
                         center = 0
                         trial[samples_idx, channel] += \
                             np.random.normal(center, std_applied,
-                                             trial[samples_idx, channel, :].shape)
+                                             trial[samples_idx, channel,
+                                             :].shape)
                         # Standarize the channel again after the change
                         temp_trial_ch_mean = np.mean(trial[:, channel], axis=0)
                         temp_trial_ch_std = np.std(trial[:, channel], axis=0)
@@ -129,10 +137,13 @@ def preprocessing_function(augmentation=True):
                         channel_idx = np.arange(ncha)[-int((ncha / 2) - 1):]
                     for channel in channel_idx:
                         trial[:, channel] = np.random.normal(0, 1,
-                                                             trial[:, channel].shape)
+                                                             trial[:,
+                                                             channel].shape)
 
         return trial
+
     return data_augmentation
+
 
 def trial_iterator(X, y, batch_size=32, shuffle=True, augmentation=True):
     """Custom trial iterator to pretrain EEGSym.
@@ -157,7 +168,8 @@ def trial_iterator(X, y, batch_size=32, shuffle=True, augmentation=True):
     """
 
     trial_data_generator = tf.keras.preprocessing.image.ImageDataGenerator(
-        preprocessing_function=preprocessing_function(augmentation=augmentation))
+        preprocessing_function=preprocessing_function(
+            augmentation=augmentation))
 
     trial_iterator = tf.keras.preprocessing.image.NumpyArrayIterator(
         X, y, trial_data_generator, batch_size=batch_size, shuffle=shuffle,
