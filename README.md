@@ -54,7 +54,7 @@ hyperparameters['ch_lateral'] = (ncha - 2) / 7  # 3/7 For 8/16 electrodes
 model_hyparams['residual'] = True
 model_hyparams['symmetric'] = True
 
-model = EEGSymv2(**model_hyparams)
+model = EEGSym(**model_hyparams)
 model.summary()
 
 # Select if the data augmentation is performed
