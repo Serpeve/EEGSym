@@ -1,6 +1,12 @@
 # EEGSym
 Open implementation and code from the publication "EEGSym: Overcoming 
-Intersubject Variability in Motor Imagery Based BCIs With Deep Learning".
+Intersubject Variability in Motor Imagery Based BCIs With Deep Learning". [1]
+
+[1] S. Pérez-Velasco, E. Santamaría-Vázquez, V. Martínez-Cagigal, 
+D. Marcos-Martínez and R. Hornero, "EEGSym: Overcoming Inter-subject 
+Variability in Motor Imagery Based BCIs with Deep Learning," in IEEE 
+Transactions on Neural Systems and Rehabilitation Engineering, 2022, 
+doi: https://doi.org/10.1109/tnsre.2022.3186442
 
 ## Architecture details
 ![EEGSym architecture details](https://github.com/Serpeve/EEGSym/blob/main/EEGSym_scheme_online.png?raw=true)
