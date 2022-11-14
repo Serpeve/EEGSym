@@ -12,9 +12,7 @@
 #
 import os
 import sys
-sys.path.insert(0, os.path.abspath('..//'))
-# sys.path.insert(0, 'C:\\Users\\GIBSergio\\Desktop\\MEDUSA_2022\\medusa-kernel')
-
+sys.path.insert(0, os.path.abspath('..//..//'))
 
 # -- Project information -----------------------------------------------------
 
