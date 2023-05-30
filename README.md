@@ -11,6 +11,20 @@ doi: https://doi.org/10.1109/tnsre.2022.3186442
 ## Architecture details
 ![EEGSym architecture details](https://github.com/Serpeve/EEGSym/blob/main/EEGSym_scheme_online.png?raw=true)
 
+## Datasets avaivability
+Since the datasets used are publicly available you should download them from the original sources. 
+Here you can find direct links to the articles and datasets:
+
+Physionet | [Article](https://doi.org/10.1161/01.CIR.101.23.e215) | [Dataset](https://physionet.org/content/eegmmidb/1.0.0/)
+
+OpenBMI | [Article](https://doi.org/10.1093/gigascience/giz002) | [Dataset](http://dx.doi.org/10.5524/100542)
+
+Kaya2018 | [Article](https://doi.org/10.1038/sdata.2018.211) |  [Dataset](https://doi.org/10.6084/m9.figshare.c.3917698)
+
+Meng2019 | [Article](https://doi.org/10.3389/fnhum.2019.00128) | [Dataset](http://dx.doi.org/10.6084/m9.figshare.7959572)
+
+Stieger2021 | [Article](https://doi.org/10.1093/cercor/bhaa234) | [Dataset](https://doi.org/10.6084/m9.figshare.13123148)
+
 ## Example of use:
 ```
 from EEGSym_architecture import EEGSym
